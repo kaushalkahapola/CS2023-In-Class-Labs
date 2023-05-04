@@ -59,9 +59,16 @@ void displayArray(int arr[], int n)
   
 // main program
 int main()
+int main()
 {
-   int heap_arr[] = {4,17,3,12,9,6};
-   int n = sizeof(heap_arr)/sizeof(heap_arr[0]);
+   int n;
+    cout << "Enter the size of the array: ";
+    cin >> n;
+
+    int heap_arr[n];
+    cout << "Enter the elements of the array: ";
+    for (int i = 0; i < n; i++)
+        cin >> heap_arr[i];
    cout<<"Input array"<<endl;
    displayArray(heap_arr,n);
   
