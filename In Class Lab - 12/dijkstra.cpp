@@ -33,10 +33,12 @@ int minDist(int distances[], bool visited[], int n) {
 void dijkstra(int G[][max], int n, int startNode)
 {
 	int distances[n]; //array that stores shortest distances
-	bool visited[n] = {false}; //array that tracks the visited nodes
-	int prev[n] = {-1};  //array that stores prev node of each vertex
+	bool visited[n]; //array that tracks the visited nodes
+	int prev[n];  //array that stores prev node of each vertex
 	for (int i = 0; i < n; i++) {
-        distances[i] = INFINITY;
+        	distances[i] = INFINITY;
+		visited[i] = false;
+		prev[i] = -1;
     }
 
 	distances[startNode] = 0;
@@ -82,7 +84,7 @@ int main(int argc, char *argv[])
 	};
 
 	int n = 6;
-	int u = 0;
+	int u = 5;
 	dijkstra(G,n,u);
 
 }
