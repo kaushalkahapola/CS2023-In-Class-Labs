@@ -1,7 +1,6 @@
 #include <iostream>
 #include <vector>
 #include <climits>
-#include <algorithm>
 
 using namespace std;
 
@@ -18,8 +17,10 @@ int findMinDistance(vector<int>& distances, vector<bool>& inMST) {
 
 void printMST(vector<int>& parents, vector<vector<int>>& graph) {
   cout << "Minimum Spanning Tree:" << endl;
-  for (int i = 1; i < parents.size(); ++i) {
-    cout << parents[i] << " - " << i << "  (Cost: " << graph[i][parents[i]] << ")" << endl;
+  for (int i = 0; i < parents.size(); ++i) {
+    if (parents[i] != -1) {
+      cout << parents[i] << " - " << i << "  (Cost: " << graph[i][parents[i]] << ")" << endl;
+    }
   }
 }
 
@@ -44,8 +45,11 @@ int primMST(vector<vector<int>>& graph, int startNode) {
   }
 
   int minCost = 0;
-  for (int i = 1; i < numVertices; ++i)
-    minCost += graph[i][parents[i]];
+  for (int i = 0; i < numVertices; ++i) {
+    if (parents[i] != -1) {
+      minCost += graph[i][parents[i]];
+    }
+  }
 
   printMST(parents, graph);
 
