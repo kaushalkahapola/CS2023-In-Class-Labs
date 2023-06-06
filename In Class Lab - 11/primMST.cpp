@@ -4,10 +4,10 @@
 
 using namespace std;
 
-int findMinDistance(vector<int>& distances, vector<bool>& inMST) {
+int findMinDistance(vector<int>& distances, vector<bool>& addedMST) {
   int minDistance = INT_MAX, minIndex = -1;
   for (int v = 0; v < distances.size(); ++v) {
-    if (!inMST[v] && distances[v] < minDistance) {
+    if (!addedMST[v] && distances[v] < minDistance) {
       minDistance = distances[v];
       minIndex = v;
     }
@@ -24,20 +24,20 @@ void printMST(vector<int>& parents, vector<vector<int>>& graph) {
   }
 }
 
-int primMST(vector<vector<int>>& graph, int startNode) {
-  int numVertices = graph.size();
-  vector<int> parents(numVertices, -1);
-  vector<int> distances(numVertices, INT_MAX);
-  vector<bool> inMST(numVertices, false);
+int primMST(vector<vector<int>>& graph, int sourceNode) {
+  int n = graph.size();
+  vector<int> parents(n, -1);
+  vector<int> distances(n, INT_MAX);
+  vector<bool> addedMST(n, false);
 
-  distances[startNode] = 0;
+  distances[sourceNode] = 0;
 
-  for (int count = 0; count < numVertices - 1; ++count) {
-    int minIndex = findMinDistance(distances, inMST);
-    inMST[minIndex] = true;
+  for (int count = 0; count < n - 1; ++count) {
+    int minIndex = findMinDistance(distances, addedMST);
+    addedMST[minIndex] = true;
 
-    for (int v = 0; v < numVertices; ++v) {
-      if (graph[minIndex][v] && !inMST[v] && graph[minIndex][v] < distances[v]) {
+    for (int v = 0; v < n; ++v) {
+      if (graph[minIndex][v] && !addedMST[v] && graph[minIndex][v] < distances[v]) {
         parents[v] = minIndex;
         distances[v] = graph[minIndex][v];
       }
@@ -45,7 +45,7 @@ int primMST(vector<vector<int>>& graph, int startNode) {
   }
 
   int minCost = 0;
-  for (int i = 0; i < numVertices; ++i) {
+  for (int i = 0; i < n; ++i) {
     if (parents[i] != -1) {
       minCost += graph[i][parents[i]];
     }
@@ -66,8 +66,8 @@ int main() {
     {1, 0, 5, 0, 4, 0}
   };
 
-  int startNode = 0;
-  int minCost = primMST(graph, startNode);
+  int sourceNode = 0;
+  int minCost = primMST(graph, sourceNode);
 
   cout << "Minimum spanning tree cost: " << minCost << endl;
 
